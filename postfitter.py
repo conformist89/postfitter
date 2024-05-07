@@ -4,7 +4,7 @@ inp_file = "/work/olavoryk/tau_pog_tau_sfs/tau_id_es_main/smhtt_ul/output/dataca
 
 file_inp = ROOT.TFile(inp_file)
 
-out_fold = "smhtt_ul/output/datacards_es_4_0_29Apr_morph_v1/2016postVFP_id_es_23Apr_es_4_0_v1-medium_vs_j_29Apr_v1/2016postVFP_tauid_medium/cmb/"
+out_fold = "/work/olavoryk/tau_pog_tau_sfs/tau_id_es_main/smhtt_ul/output/datacards_es_4_0_29Apr_morph_v1/2016postVFP_id_es_23Apr_es_4_0_v1-medium_vs_j_29Apr_v1/2016postVFP_tauid_medium/cmb/"
 
 prefit_fold = "shapes_prefit"
 postfit_folder = "shapes_fit_s"
@@ -32,7 +32,6 @@ for i in range(len(prefit_in_folders_names)):
     hist_list_pre = []
     for j in range(len(hist_list)):
         hist_list_pre.append( file_inp.Get("shapes_prefit/"+prefit_in_folders_names[i]).GetListOfKeys()[j].GetName() )
-    # print(hist_list_pre)
 
     new_file.mkdir(prefit_in_folders_names[i]+"_prefit")
     new_file.cd(prefit_in_folders_names[i]+"_prefit")
@@ -51,7 +50,6 @@ for i in range(len(postfit_in_folders_names)):
     hist_list_post = []
     for j in range(len(hist_list)):
         hist_list_post.append( file_inp.Get(postfit_folder+"/"+postfit_in_folders_names[i]).GetListOfKeys()[j].GetName() )
-    print(hist_list_post)
     
 
     new_file1.mkdir(postfit_in_folders_names[i]+"_postfit")
@@ -59,7 +57,6 @@ for i in range(len(postfit_in_folders_names)):
 
     for shap in hist_list_post:
         hist_proc1 = file_inp.Get(postfit_folder+"/"+postfit_in_folders_names[i]+"/"+shap)
-        print(hist_proc1)
         hist_proc1.Write()
 
 new_file1.Close()
