@@ -27,6 +27,7 @@ postfit_in_folders_names
 new_file = ROOT.TFile(out_fold+"postfitshape.root", "recreate")
 
 for i in range(len(prefit_in_folders_names)):
+    print(prefit_in_folders_names[i])
     hist_list  = file_inp.Get("shapes_prefit/"+prefit_in_folders_names[i]).GetListOfKeys()
 
     hist_list_pre = []
@@ -41,13 +42,24 @@ for i in range(len(prefit_in_folders_names)):
         hist_proc = file_inp.Get("shapes_prefit/"+prefit_in_folders_names[i]+"/"+shap)
         hist_proc.SetTitle("data_obs")
         if shap == "data":
-            n = hist_proc.GetN()
+            n =0
+            x0 = 0
+            xn = 0
+            if prefit_in_folders_names[i] != "htt_mm_100_Run2016":
+                n = hist_proc.GetN()
+                x0 = 30
+                xn = 125
+            else:
+                n = 1
+                x0 = 60
+                xn = 120
 
-            histogram = ROOT.TH1F("data_obs", "data_obs", n, 30, 125 )
+            histogram = ROOT.TH1F("data_obs", "data_obs", n, x0, xn )
             for k in range(1, n+1):
                 histogram.SetBinContent(k, hist_proc.GetPointY(k-1))
                 histogram.SetBinError(k, hist_proc.GetErrorYhigh(k-1))
             histogram.Write("data_obs")
+            
         else:
             hist_proc.Write()
 
@@ -71,15 +83,27 @@ for i in range(len(postfit_in_folders_names)):
         hist_proc1 = file_inp.Get(postfit_folder+"/"+postfit_in_folders_names[i]+"/"+shap)
         hist_proc1.SetTitle("data_obs")
         if shap == "data":
-            # hist_proc1.Write("data_obs")
-            n1 = hist_proc1.GetN()
+            n1 =0
+            x01 = 0
+            xn1 = 0
+
+            if prefit_in_folders_names[i] != "htt_mm_100_Run2016":
+
+                n1 = hist_proc1.GetN()
+                x01 = 30
+                xn1 = 125
+            else:
+                n1 = 1
+                x01 = 60
+                xn1 = 120
 
             
-            histogram1 = ROOT.TH1F("data_obs", "data_obs", n, 30, 125 )
-            for k in range(1, n+1):
+            histogram1 = ROOT.TH1F("data_obs", "data_obs", n1, x01, xn1 )
+            for k in range(1, n1+1):
                 histogram1.SetBinContent(k, hist_proc1.GetPointY(k-1))
                 histogram1.SetBinError(k, hist_proc1.GetErrorYhigh(k-1))
             histogram1.Write("data_obs")
+            
         else:
             hist_proc1.Write()
 
