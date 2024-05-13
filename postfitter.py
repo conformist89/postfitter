@@ -24,7 +24,7 @@ for i in range(len(postfit_keys)):
 
 postfit_in_folders_names
 
-new_file = ROOT.TFile(out_fold+"postfitshape_er.root", "recreate")
+new_file = ROOT.TFile(out_fold+"postfitshape.root", "recreate")
 
 for i in range(len(prefit_in_folders_names)):
     hist_list  = file_inp.Get("shapes_prefit/"+prefit_in_folders_names[i]).GetListOfKeys()
@@ -43,18 +43,17 @@ for i in range(len(prefit_in_folders_names)):
         if shap == "data":
             n = hist_proc.GetN()
 
-            histogram = ROOT.TH1F("data_obs", "data_obs", n, hist_proc.GetPointX(0), hist_proc.GetPointX(n) )
+            histogram = ROOT.TH1F("data_obs", "data_obs", n, 30, 125 )
             for k in range(1, n+1):
                 histogram.SetBinContent(k, hist_proc.GetPointY(k-1))
                 histogram.SetBinError(k, hist_proc.GetErrorYhigh(k-1))
             histogram.Write("data_obs")
-            # hist_proc.Write("data_obs")
         else:
             hist_proc.Write()
 
 new_file.Close()
 
-new_file1 = ROOT.TFile(out_fold+"postfitshape_er.root", "update")
+new_file1 = ROOT.TFile(out_fold+"postfitshape.root", "update")
 
 for i in range(len(postfit_in_folders_names)):
     hist_list  = file_inp.Get(postfit_folder+"/"+postfit_in_folders_names[i]).GetListOfKeys()
@@ -75,12 +74,12 @@ for i in range(len(postfit_in_folders_names)):
             # hist_proc1.Write("data_obs")
             n1 = hist_proc1.GetN()
 
-            histogram1 = ROOT.TH1F("data_obs", "data_obs", n, hist_proc1.GetPointX(0), hist_proc1.GetPointX(n) )
+            
+            histogram1 = ROOT.TH1F("data_obs", "data_obs", n, 30, 125 )
             for k in range(1, n+1):
                 histogram1.SetBinContent(k, hist_proc1.GetPointY(k-1))
                 histogram1.SetBinError(k, hist_proc1.GetErrorYhigh(k-1))
             histogram1.Write("data_obs")
-            # hist_proc.Write("data_obs")
         else:
             hist_proc1.Write()
 
