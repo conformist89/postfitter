@@ -1,10 +1,20 @@
 import ROOT
+import json
 
-inp_file = "/work/olavoryk/tau_pog_tau_sfs/tau_id_es_main/smhtt_ul/output/datacards_es_4_0_29Apr_morph_v1/2016postVFP_id_es_23Apr_es_4_0_v1-medium_vs_j_29Apr_v1/2016postVFP_tauid_medium/cmb/fitDiagnostics.2016postVFP.root"
+
+def in_out_put():
+    with open('input_output_conf.json') as f:
+        d = json.load(f)
+        input_file = d['input_file']
+        out_folder = d['out_fold']
+
+        return input_file, out_folder
+    
+inp_file = in_out_put()[0]
+out_fold = in_out_put()[1]
 
 file_inp = ROOT.TFile(inp_file)
 
-out_fold = "/work/olavoryk/tau_pog_tau_sfs/tau_id_es_main/smhtt_ul/output/datacards_es_4_0_29Apr_morph_v1/2016postVFP_id_es_23Apr_es_4_0_v1-medium_vs_j_29Apr_v1/2016postVFP_tauid_medium/cmb/"
 
 prefit_fold = "shapes_prefit"
 postfit_folder = "shapes_fit_s"
